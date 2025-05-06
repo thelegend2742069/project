@@ -38,6 +38,7 @@ SIMPLE_JWT = {
 INSTALLED_APPS = [
     'api',
     'chat',
+    'video_handler',
     'corsheaders',
     'daphne',
     'rest_framework',
