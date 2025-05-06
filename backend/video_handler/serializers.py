@@ -6,7 +6,7 @@ class VideoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Video
-        fields = ['title', 'path']
+        fields = ['id', 'title', 'path']
 
     
     def __init__(self, instance=None, data=..., **kwargs):
