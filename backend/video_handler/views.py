@@ -1,6 +1,6 @@
 from .serializers import VideoSerializer
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.generics import ListCreateAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import Video
 from api.models import Room
 from .utils import store_as_hls
@@ -34,3 +34,12 @@ class VideoListCreate(ListCreateAPIView):
     
     
 
+class VideoDelete(DestroyAPIView):
+    serializer_class = VideoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        room_code = self.kwargs.get('room_code')
+        room = Room.objects.get(room_code=room_code)
+
+        return Video.objects.filter(room=room)
