@@ -27,5 +27,5 @@ urlpatterns = [
     path('api/room/create/', RoomCreate.as_view(), name='room_create'),
     path('api/room/<str:room_code>/delete/', RoomDelete.as_view(), name='room_delete'),
     # path('', include('api.urls')),
-    # path('', include('chat.urls')),
+    path('api/room/<str:room_code>/', include('chat.urls')),
 ]
