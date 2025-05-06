@@ -5,7 +5,7 @@ from api.models import Room
 
 class Message(models.Model):
     text = models.CharField(max_length=100)
-    room_code = models.ForeignKey(Room, on_delete=models.CASCADE)
-    username = models.CharField(max_length=30)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    username = models.CharField(max_length=30, default='guest')
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
