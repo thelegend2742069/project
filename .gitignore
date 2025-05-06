@@ -1,6 +1,9 @@
 env/
 **/__pycache__
 
+# media
+media/
+
 # dependencies
 **/node_modules
 **/.pnp
