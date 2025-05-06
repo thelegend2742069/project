@@ -11,7 +11,7 @@ class Video(models.Model):
 
     
     def delete(self, *args, **kwargs):
-        video_dir = "/".join(self.hls_src.split('/')[:-1])
+        video_dir = "/".join(self.path.split('/')[:-1])
         
         try:
             shutil.rmtree(video_dir)
