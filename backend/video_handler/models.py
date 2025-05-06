@@ -7,6 +7,7 @@ class Video(models.Model):
     path = models.CharField(max_length=200)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
 
     
     def delete(self, *args, **kwargs):
