@@ -11,27 +11,7 @@ class UserCreate(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
     
-
-
-class RoomList(generics.ListAPIView):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-    permission_classes = [AllowAny]
-
-
-class RoomCreate(generics.CreateAPIView):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-    permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        if serializer.is_valid():
-            user = self.request.user
-            serializer.save(host=user)
-        else:
-            print(serializer.errors)
-
-
+    
 
 class RoomListCreate(generics.ListCreateAPIView):
     serializer_class = RoomSerializer

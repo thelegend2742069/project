@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import UserCreate, RoomCreate, RoomDelete
+from api.views import UserCreate, RoomCreate, RoomDelete, RoomListCreate
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -24,7 +24,7 @@ urlpatterns = [
     path('api/user/register/', UserCreate.as_view(), name='register'),
     path('api/token/', TokenObtainPairView.as_view(), name='get_token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
-    path('api/room/create/', RoomCreate.as_view(), name='room_create'),
+    path('api/room/', RoomListCreate.as_view(), name='room'),
     path('api/room/<str:room_code>/delete/', RoomDelete.as_view(), name='room_delete'),
     path('api/room/<str:room_code>/', include('chat.urls')),
     path('api/room/<str:room_code>/', include('video_handler.urls')),
