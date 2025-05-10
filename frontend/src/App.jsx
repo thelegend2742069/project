@@ -4,6 +4,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import NotFound from "./pages/NotFound"
 import JoinRoom from "./pages/JoinRoom"
+import Room from "./pages/Room"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/room" element={<JoinRoom />} />
+        <Route path="/room/*" element={<Room />} />
         <Route path="*" element={<NotFound />} />        
       </Routes>
     </BrowserRouter>
