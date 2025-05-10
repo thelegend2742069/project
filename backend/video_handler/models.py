@@ -4,7 +4,7 @@ import shutil
 
 class Video(models.Model):
     title = models.CharField(max_length=50)
-    path = models.CharField(max_length=200)
+    path = models.CharField(max_length=200, blank=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
     date_uploaded = models.DateTimeField(auto_now_add=True)
