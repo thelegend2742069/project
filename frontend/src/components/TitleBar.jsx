@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal'
 import api from '../api';
 
-function TitleBar({setVideoSource}) {
+function TitleBar(setVideoURL) {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState(undefined);
@@ -21,6 +21,9 @@ function TitleBar({setVideoSource}) {
         console.log("sending POST request")
         const res = await api.post(`/api${window.location.pathname}/video/`, formData)
         console.log(res.data)
+
+        setVideoURL(res.data.path)
+        setOpen(false)
     }
 
     
@@ -39,7 +42,7 @@ function TitleBar({setVideoSource}) {
             isOpen={open}
             onRequestClose={handleClose}
             >
-                YOOOOOOOOOOOO
+                Upload a Video
 
                 <form 
                 className="video-upload-form" 

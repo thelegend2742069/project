@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import VideoPlayer from './VideoPlayer';
 
+
 function VideoHandler(videoURL) {
+    const baseURL = import.meta.env.VITE_API_URL
     const videojsOptions = {
         preload: "auto",
         responsive: true,
@@ -21,12 +23,18 @@ function VideoHandler(videoURL) {
         },
         sources: [
             {
-                src: "http://localhost:8000/media/test/b99_s10e05/video.m3u8",
+                src: "media/test/b99_s10e05/video.m3u8",
                 type: "application/x-mpegURL"
             }
         ]
 
     }
+    
+
+    useEffect(() => {
+        console.log(`changing source to ${videoURL.videoURL}`)
+        videojsOptions.sources[0].src = `${baseURL}/${videoURL.videoURL}`
+    }, [videoURL]);
 
     return (
         <div>
