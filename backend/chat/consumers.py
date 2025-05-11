@@ -9,7 +9,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_code = self.scope["url_route"]["kwargs"]["room_code"]
         await self.channel_layer.group_add(self.room_code, self.channel_name)
         await self.accept()
-        print("connected to channel")
 
     
     async def disconnect(self, code):
@@ -18,35 +17,35 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         message_data = json.loads(text_data)
-        print("message received at consumer")
-        print(message_data)
 
         username = message_data['username']
         text = message_data['text']
 
         await self.save_message(username, text, self.room_code)
 
-        await self.channel_layer.group_send(self.room_code, {
-            "type": 'chat_message',
-            "username": username,
-            "text": text
-        })
+        await self.channel_layer.group_send(
+            self.room_code, 
+            {
+                "type": 'chat_message',
+                "username": username,
+                "text": text
+            }
+        )
 
         print('message sent to everyone')
 
         
     
-    async def chat_message(self, event):
-        message_data = json.loads(event)
-
+    async def chat_message(self, message_data):
         username = message_data['username']
         text = message_data['text']
 
-        await self.send(text_data=json.dumps({
+        await self.send(text_data=json.dumps(
+            {
             "username": username,
             "text": text
-        },
-        default=str
+            },
+            default=str
         ))
 
 
