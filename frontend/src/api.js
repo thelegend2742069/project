@@ -8,8 +8,6 @@ const refreshApi = axios.create({baseURL: import.meta.env.VITE_API_URL})
 
 
 function isTokenExpired(token) {
-    if (!token){ return true }
-    
     const tokenExpiry = jwtDecode(token).exp;
     const now = Date.now() / 1000;
     return now > tokenExpiry
@@ -38,7 +36,8 @@ async function refreshToken() {
 
 api.interceptors.request.use(
     (config) => {
-        if (!isTokenExpired(localStorage.getItem(ACCESS_TOKEN)) || refreshToken()) {
+        const token = localStorage.getItem(ACCESS_TOKEN)
+        if (token && (!isTokenExpired(token) || refreshToken())) {
             const token = localStorage.getItem(ACCESS_TOKEN)
             config.headers.Authorization = `Bearer ${token}`
         } 
