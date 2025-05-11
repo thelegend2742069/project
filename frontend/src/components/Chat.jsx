@@ -8,6 +8,9 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [username,setUsername] = useState('')
     const [messageText, setMessageText] = useState('');
+    const [socket, setSocket] = useState()
+    const ws_url = import.meta.env.VITE_WS_URL
+
 
     const getMessages = async () => {
         const res = await api.get(`/api${window.location.pathname}/messages/`)
@@ -26,12 +29,13 @@ function Chat() {
         e.preventDefault()
 
         try{
-            console.log(`sending post request to /api${window.location.pathname}/messages/`)
-            console.log(`data: text=${messageText}, username=${username}`)
-            const res = await api.post(`/api${window.location.pathname}/messages/`, {text:messageText, username:username})
-            console.log(res.data)
-            setMessageText('')
-            setMessages(messages => [...messages, res.data])
+            const newMessage = JSON.stringify({
+                username: username,
+                text: messageText
+            })
+            
+            socket.send(newMessage)
+
         } catch (error) {
             console.log(error)
             alert(error)
@@ -39,6 +43,17 @@ function Chat() {
     }
     useEffect(() => {
         getMessages()
+        const socket = new WebSocket(`${ws_url}/ws${window.location.pathname}/`)
+        setSocket(socket)
+        
+        socket.onmessage = (e) => {
+            const newMessage = JSON.parse(e.data)
+            setMessages(messages => [...messages, newMessage])
+        }
+        
+        return () =>{
+            socket.close()
+        }
     }, []);
 
 
