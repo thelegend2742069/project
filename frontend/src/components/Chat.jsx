@@ -40,6 +40,7 @@ function Chat() {
             console.log(error)
             alert(error)
         }
+        setMessageText('')
     }
     useEffect(() => {
         getMessages()
@@ -50,7 +51,7 @@ function Chat() {
             const newMessage = JSON.parse(e.data)
             setMessages(messages => [...messages, newMessage])
         }
-        
+
         return () =>{
             socket.close()
         }
