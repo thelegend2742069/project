@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal'
 import api from '../api';
+import Card from './Card';
 
 function TitleBar(setVideoURL) {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState(undefined);
     const [title, setTitle] = useState('');
+    const [uploads, setUploads] = useState([])
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
     const handleUpload = (e) => setVideo(e.target.files[0])
@@ -26,7 +28,29 @@ function TitleBar(setVideoURL) {
         setOpen(false)
     }
 
+
+    useEffect(() => {
+        getUploads()
+    }, []);
+
+
+    const getUploads = async () => {
+        try {
+            const res = await api.get(`/api${window.location.pathname}/video`)
+            console.log(res.data)
+            setUploads(res.data)
+            console.log(uploads)
+        } catch (error) {
+            alert(error)
+        }
+    }
     
+    const onDelete = (id) => {
+        api
+            .delete(`/api${window.location.pathname}/video/delete/${id}/`)
+            .catch((err) => {alert(err)})
+    }
+
 
     return (
     <div className='title-bar'>
@@ -66,6 +90,13 @@ function TitleBar(setVideoURL) {
 
                     <button className='form-button' type='submit'>upload</button>
                 </form>
+                <div>
+                    {
+                        uploads.map((upload) => (
+                            <Card setVideoURL={setVideoURL} setOpen={setOpen} upload={upload} onDelete={onDelete} key={upload.id}/>
+                        ))
+                    }
+                </div>
             </Modal>
         </div>
     </div>
