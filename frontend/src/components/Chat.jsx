@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthorizedStatus } from '../hooks/useAuthorizedStatus';
 import api from '../api';
+import '../styles/chat.css'
 
 
 function Chat() {
@@ -22,7 +23,6 @@ function Chat() {
 
         setIsAuthorized(true)
         console.log(isAuthorized)
-
     }
 
     const handleSubmit = async (e) => {
@@ -42,6 +42,7 @@ function Chat() {
         }
         setMessageText('')
     }
+    
     useEffect(() => {
         getMessages()
         const socket = new WebSocket(`${ws_url}/ws${window.location.pathname}/`)
@@ -63,7 +64,7 @@ function Chat() {
             <div className="chat-messages">
                 {messages.map((message) => (<div className="message">{message.username}: {message.text}</div>))}
             </div>
-            
+            <div className='input-container'>
             { isAuthorized ?
                 <div className="message-box">
                     <form onSubmit={handleSubmit} className="message-form">
@@ -76,7 +77,7 @@ function Chat() {
                         />
 
                         <button 
-                        className="send-message" 
+                        className="send-message-button" 
                         type='submit'
                         >
                             send
@@ -96,6 +97,7 @@ function Chat() {
                     </form>
                 </div>
             }
+            </div>
         </div>
     );
 }
