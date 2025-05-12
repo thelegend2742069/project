@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import VideoPlayer from './VideoPlayer';
 
 
-function VideoHandler(videoURL) {
+function VideoHandler({videoURL, setVideoURL, mediaSocketRef}) {
     const baseURL = import.meta.env.VITE_API_URL
     const videojsOptions = {
         preload: "auto",
@@ -29,11 +29,21 @@ function VideoHandler(videoURL) {
         ]
 
     }
-    
 
     useEffect(() => {
-        console.log(`changing source to ${videoURL.videoURL}`)
-        videojsOptions.sources[0].src = `${baseURL}/${videoURL.videoURL}`
+        videojsOptions.sources[0].src = `${baseURL}/${videoURL}`
+        
+        const media_data = JSON.stringify({
+            path: videoURL,
+        })
+
+        console.log(typeof mediaSocketRef)
+        if (mediaSocketRef.current.readyState === WebSocket.OPEN) {
+            mediaSocketRef.current.send(media_data)
+        } else {
+            console.log("websocket connection not open")
+            console.log(mediaSocketRef.current.readyState)
+        }
     }, [videoURL]);
 
     return (
