@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal'
 import api from '../api';
 import Card from './Card';
+import '../styles/titlebar.css'
 
 function TitleBar(setVideoURL) {
     const [isAuthorized, setIsAuthorized] = useState(false);

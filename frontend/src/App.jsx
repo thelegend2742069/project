@@ -5,6 +5,7 @@ import Register from "./pages/Register"
 import NotFound from "./pages/NotFound"
 import JoinRoom from "./pages/JoinRoom"
 import Room from "./pages/Room"
+import './App.css'
 
 function App() {
 
