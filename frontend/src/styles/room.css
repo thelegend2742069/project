@@ -1,0 +1,34 @@
+.room {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  height: 100vh;
+  width: 100%;
+}
+
+.media-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-shrink: 1;
+    align-items: left;
+    height: 100%;
+    width: 100%;
+}
+
+.title-bar-container {
+    justify-content: left;
+    height: 10%;
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+}
+
+.chat-container {
+    height: 100vh;
+    max-width: 300px;
+    flex-shrink: 0;
+    padding-left: 10px;
+}

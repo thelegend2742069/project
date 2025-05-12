@@ -1,0 +1,48 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.chat-messages {
+    display: flex;
+    flex: 1;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    flex-direction: column-reverse;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.messages {
+    white-space: normal;
+}
+
+.message-box, .username-box {
+    flex: 1;
+    width: 100%;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+}
+
+.message-form, .username-form{
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+}
+
+.input-container input {
+    flex: 1;
+    height: 100%;
+    padding: 0.5rem;
+    border: 2px;
+    outline: none;
+}
+
+.input-container button {
+    width: auto;
+    height: auto;
+    margin:0px;
+    border-radius: 2px;
+    border: 0px;
+}

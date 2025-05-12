@@ -1,0 +1,15 @@
+button {
+    color: #b6b5b5;
+    box-sizing: border-box;
+    transition: 0.2s ease-out;
+    cursor: pointer;
+    user-select: none;
+    background: #6f53a0;
+    border: 1px solid #b6b5b570;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    top: 0;
+    right: 0;
+    border-radius: 0.2em;
+    margin: 5px;
+}
