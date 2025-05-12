@@ -4,7 +4,7 @@ import api from "../api"
 import { useEffect, useState } from "react"
 
 export function useAuthorizedStatus() {
-    const [isAuthorized, setIsAuthorized] = useState(null);
+    const [isAuthorized, setIsAuthorized] = useState(false);
 
     useEffect(() => {
         auth().catch(() => setIsAuthorized(false))
