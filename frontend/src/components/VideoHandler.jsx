@@ -4,6 +4,9 @@ import VideoPlayer from './VideoPlayer';
 
 function VideoHandler({videoURL, setVideoURL, mediaSocketRef}) {
     const baseURL = import.meta.env.VITE_API_URL
+    const isFirstRender = useRef(true);
+
+    
     const videojsOptions = {
         preload: "auto",
         responsive: true,
@@ -31,6 +34,11 @@ function VideoHandler({videoURL, setVideoURL, mediaSocketRef}) {
     }
 
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }  
+        
         videojsOptions.sources[0].src = `${baseURL}/${videoURL}`
         
         const media_data = JSON.stringify({

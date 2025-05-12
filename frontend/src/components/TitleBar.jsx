@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal'
 import api from '../api';
 import Card from './Card';
 import '../styles/titlebar.css'
 
 function TitleBar(setVideoURL) {
-    const [isAuthorized, setIsAuthorized] = useState(false);
+    const isFirstRender = useRef(true);
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState(undefined);
     const [title, setTitle] = useState('');
@@ -31,8 +31,15 @@ function TitleBar(setVideoURL) {
 
 
     useEffect(() => {
-        getUploads()
-    }, []);
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
+
+        if (open === true) {
+            getUploads()
+        }
+    }, [open]);
 
 
     const getUploads = async () => {
