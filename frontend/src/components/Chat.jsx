@@ -45,12 +45,12 @@ function Chat() {
     
     useEffect(() => {
         getMessages()
-        const socket = new WebSocket(`${ws_url}/ws${window.location.pathname}/`)
+        const socket = new WebSocket(`${ws_url}/ws/chat${window.location.pathname}/`)
         setSocket(socket)
         
         socket.onmessage = (e) => {
             const newMessage = JSON.parse(e.data)
-            setMessages(messages => [...messages, newMessage])
+            setMessages(messages => [newMessage, ...messages])
         }
 
         return () =>{
