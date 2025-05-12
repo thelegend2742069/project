@@ -38,9 +38,7 @@ function TitleBar(setVideoURL) {
     const getUploads = async () => {
         try {
             const res = await api.get(`/api${window.location.pathname}/video`)
-            console.log(res.data)
             setUploads(res.data)
-            console.log(uploads)
         } catch (error) {
             alert(error)
         }
@@ -94,7 +92,13 @@ function TitleBar(setVideoURL) {
                 <div>
                     {
                         uploads.map((upload) => (
-                            <Card setVideoURL={setVideoURL} setOpen={setOpen} upload={upload} onDelete={onDelete} key={upload.id}/>
+                            <Card 
+                            setVideoURL={setVideoURL}
+                            setOpen={setOpen}
+                            upload={upload} 
+                            onDelete={onDelete} 
+                            key={upload.id}
+                            />
                         ))
                     }
                 </div>
