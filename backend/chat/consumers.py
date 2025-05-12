@@ -6,13 +6,14 @@ from api.models import Room
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_code = self.scope["url_route"]["kwargs"]["room_code"]
-        await self.channel_layer.group_add(self.room_code, self.channel_name)
+        self.room_code = self.scope["url_route"]["kwargs"]["room_code"] 
+        self.ws_code = self.room_code + "_chat"
+        await self.channel_layer.group_add(self.ws_code, self.channel_name)
         await self.accept()
 
     
     async def disconnect(self, code):
-        self.channel_layer.group_discard(self.room_code, self.channel_name)
+        self.channel_layer.group_discard(self.ws_code, self.channel_name)
     
 
     async def receive(self, text_data):
@@ -21,10 +22,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = message_data['username']
         text = message_data['text']
 
-        await self.save_message(username, text, self.room_code)
+        await self.save_message(username, text)
 
         await self.channel_layer.group_send(
-            self.room_code, 
+            self.ws_code, 
             {
                 "type": 'chat_message',
                 "username": username,
@@ -50,7 +51,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     @sync_to_async
-    def save_message(self, username, text, room_code):
-        room = Room.objects.get(room_code=room_code)
+    def save_message(self, username, text):
+        room = Room.objects.get(room_code=self.room_code)
         Message.objects.create(username=username, text=text, room=room)
         print("message saved to database")
