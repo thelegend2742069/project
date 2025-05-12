@@ -14,7 +14,7 @@ class MessageListCreate(generics.ListCreateAPIView):
         room_code = self.kwargs.get('room_code')
         room = Room.objects.get(room_code=room_code)
 
-        return Message.objects.filter(room=room)
+        return Message.objects.filter(room=room).order_by('-timestamp')
     
     def perform_create(self, serializer):
         if serializer.is_valid():
