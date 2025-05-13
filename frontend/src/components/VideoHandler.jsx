@@ -26,7 +26,7 @@ function VideoHandler({videoURL, setVideoURL, mediaSocketRef}) {
         },
         sources: [
             {
-                src: "media/test/b99_s10e05/video.m3u8",
+                src: `${baseURL}/media/test/b99_s10e05/video.m3u8`,
                 type: "application/x-mpegURL"
             }
         ]
@@ -36,9 +36,10 @@ function VideoHandler({videoURL, setVideoURL, mediaSocketRef}) {
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false
+            console.log(baseURL)
             return
         }  
-        
+
         videojsOptions.sources[0].src = `${baseURL}/${videoURL}`
         
         const media_data = JSON.stringify({
