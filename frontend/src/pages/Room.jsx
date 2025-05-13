@@ -19,7 +19,22 @@ function Room() {
 
         mediaSocketRef.current.onmessage = (e) => {
             const media_data = JSON.parse(e.data)
-            setVideoURL(media_data.path)
+            if (media_data.method === 'change_src') setVideoURL(media_data.path)
+            else if (media_data.method === 'play') {
+                console.log("received play")
+                playerRef.current.play()
+                playerRef.current.currentTime(media_data.timestamp)
+            }
+            else if (media_data.method === 'pause') {
+                console.log("received pause")
+                playerRef.current.pause()
+                playerRef.current.currentTime(media_data.timestamp)
+            }
+            // else if (media_data.method === 'seeked') playerRef.current.currentTime(media_data.timestamp)
+            else if (media_data.method === 'ratechange') {
+                console.log("received ratechange")
+                playerRef.current.playbackRate(media_data.playback_rate)
+            }
         }
 
         return () => {
