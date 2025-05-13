@@ -3,9 +3,7 @@ import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
 export const VideoPlayer = (props) => {
-  const videoRef = useRef(null);
-  const playerRef = useRef(null);
-  const { options, onReady } = props;
+  const { options, onReady, playerRef, videoRef } = props;
 
   useEffect(() => {
     if (!playerRef.current) {
