@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Modal from 'react-modal'
 import api from '../api';
 import Card from './Card';
 import '../styles/titlebar.css'
+import { AuthContext } from '../hooks/AuthContext';
 
 function TitleBar(setVideoURL) {
     const isFirstRender = useRef(true);
+    const { isAuthorized, setIsAuthorized } = useContext(AuthContext)
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState(undefined);
     const [title, setTitle] = useState('');
@@ -74,28 +76,30 @@ function TitleBar(setVideoURL) {
             >
                 Upload a Video
 
-                <form 
-                className="video-upload-form" 
-                onSubmit={handleSubmit}
-                encType='multipart/form-data'
-                >
-                    
-                    <input 
-                    className="video-upload" 
-                    type="file" 
-                    onChange={handleUpload}
-                    />
+                { isAuthorized &&
+                    <form 
+                    className="video-upload-form" 
+                    onSubmit={handleSubmit}
+                    encType='multipart/form-data'
+                    >
+                        
+                        <input 
+                        className="video-upload" 
+                        type="file" 
+                        onChange={handleUpload}
+                        />
 
-                    <input 
-                    className="video-title"
-                    type="text" 
-                    value={title}
-                    onChange={(e) => {setTitle(e.target.value)}}
-                    placeholder='title'
-                    />
+                        <input 
+                        className="video-title"
+                        type="text" 
+                        value={title}
+                        onChange={(e) => {setTitle(e.target.value)}}
+                        placeholder='title'
+                        />
 
-                    <button className='form-button' type='submit'>upload</button>
-                </form>
+                        <button className='form-button' type='submit'>upload</button>
+                    </form>
+                }
                 <div>
                     {
                         uploads.map((upload) => (

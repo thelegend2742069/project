@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import api from "../api"
 import { useNavigate } from "react-router-dom"
-import { useAuthorizedStatus } from "../hooks/useAuthorizedStatus"
+import { AuthContext } from "../hooks/AuthContext"
 
 
 function RoomForm() {
-    const isAuthorized = useAuthorizedStatus()
+    const { isAuthorized } = useContext(AuthContext)
     const [roomCode, setRoomCode] = useState('')
     const [submitButton, setSubmitButton] = useState('JOIN')
     const navigate = useNavigate()

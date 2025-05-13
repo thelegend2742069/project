@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useAuthorizedStatus } from '../hooks/useAuthorizedStatus';
+import React, { useState, useEffect, useContext } from 'react';
 import api from '../api';
 import '../styles/chat.css'
+import { AuthContext } from '../hooks/AuthContext';
 
 
 function Chat() {
-    const [isAuthorized, setIsAuthorized] = useState(useAuthorizedStatus())
+    const {isAuthorized, setIsAuthorized} = useContext(AuthContext)
     const [messages, setMessages] = useState([]);
     const [username,setUsername] = useState('')
     const [messageText, setMessageText] = useState('');
