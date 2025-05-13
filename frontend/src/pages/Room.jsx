@@ -7,6 +7,8 @@ import { AuthContext } from '../hooks/AuthContext';
 
 function Room() {
     const mediaSocketRef = useRef(null);
+    const playerRef = useRef(null);
+    const videoRef = useRef(null);
     const { isAuthorized, setIsAuthorized } = useContext(AuthContext)
     const [videoURL, setVideoURL] = useState("media/test/b99_s10e05/video.m3u8");
     const ws_url = import.meta.env.VITE_WS_URL
@@ -33,7 +35,13 @@ function Room() {
                     <TitleBar setVideoURL={setVideoURL} />
                 </div>
                 <div className="video-container">
-                    <VideoHandler videoURL={videoURL} setVideoURL={setVideoURL} mediaSocketRef={mediaSocketRef} />
+                    <VideoHandler 
+                        videoURL={videoURL} 
+                        setVideoURL={setVideoURL} 
+                        mediaSocketRef={mediaSocketRef} 
+                        playerRef={playerRef}
+                        videoRef={videoRef}
+                    />
                 </div>
                 
             </div>
